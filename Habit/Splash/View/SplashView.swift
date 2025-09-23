@@ -17,8 +17,8 @@ struct SplashView: View {
             case .loading:
                 loadingView()
             case .goToSigInScreen:
-                Text("Carregar tela de login")
                 //navegar para a proxima tela
+                viewModel.signInView()
             case .goToHomeScreen:
                 Text("Carregar tela principal")
                 //navegar para a proxima tela
