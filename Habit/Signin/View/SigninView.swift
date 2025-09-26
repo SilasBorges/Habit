@@ -17,49 +17,68 @@ struct SigninView : View {
     @State var navigationHidden = true
     
     var body: some View {
-        NavigationView {
-            
-            ScrollView {
-                
-                VStack(alignment: .center, spacing: 20) {
+        ZStack {
+            if case SigninUiState.goToHomeScreen = viewModel.uiState {
+                viewModel.homeView()
+            } else {
+                NavigationView {
                     
-                    Spacer(minLength: 36)
-                    
-                    VStack(alignment: .center, spacing: 8) {
-                        Image ("logo")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(.horizontal, 48)
+                    ScrollView {
                         
-                        Text("Login")
-                            .foregroundColor(.orange)
-                            .font(Font.system(.title).bold())
-                            .padding(.bottom, 8)
+                        VStack(alignment: .center, spacing: 20) {
+                            
+                            Spacer(minLength: 36)
+                            
+                            VStack(alignment: .center, spacing: 8) {
+                                Image ("logo")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(.horizontal, 48)
+                                
+                                Text("Login")
+                                    .foregroundColor(.orange)
+                                    .font(Font.system(.title).bold())
+                                    .padding(.bottom, 8)
+                                
+                                emailField
+                                
+                                passwordField
+                                
+                                enterButton
+                                
+                                registerLink
+                                
+                                Text("Copyright @YYY")
+                                    .font(Font.system(size: 16).bold())
+                                    .padding(.top, 16)
+                            }
+                        }
                         
-                        numberField
+                        if case SigninUiState.error(let value) = viewModel.uiState {
+                            Text("")
+                                .alert(isPresented: .constant(true)) {
+                                    Alert(title: Text("Habit"), message: Text(value), dismissButton: .default(Text("Ok")){
+                                        //faz algo quando some o alerta
+                                    })
+                                }
+                        }
                         
-                        passwordField
-                        
-                        enterButton
-                        
-                        registerLink
-                        
-                        Text("Copyright @YYY")
-                            .font(Font.system(size: 16).bold())
-                            .padding(.top, 16)
-                    }
+                    }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(.horizontal, 32)
+                        .background(Color.white)
+                        .navigationBarTitle("Login", displayMode: .inline)
+                        .navigationBarHidden(navigationHidden)
                 }
-            }.frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.horizontal, 32)
-                .background(Color.white)
-                .navigationBarTitle("Login", displayMode: .inline)
-                .navigationBarHidden(navigationHidden)
+            }
+          
         }
+        
+        
     }
 }
 
 extension SigninView {
-    var numberField: some View {
+    var emailField: some View {
         TextField("", text: $email)
             .border(Color.black)
     }
@@ -75,7 +94,7 @@ extension SigninView {
 extension SigninView {
     var enterButton: some View {
         Button("Entrar") {
-            //acontece o evento de click
+            viewModel.login(email: email, password: password)
         }
     }
 }
