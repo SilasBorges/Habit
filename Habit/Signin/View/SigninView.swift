@@ -23,7 +23,7 @@ struct SigninView : View {
             } else {
                 NavigationView {
                     
-                    ScrollView {
+                    ScrollView(showsIndicators: false) {
                         
                         VStack(alignment: .center, spacing: 20) {
                             
@@ -70,10 +70,7 @@ struct SigninView : View {
                         .navigationBarHidden(navigationHidden)
                 }
             }
-          
         }
-        
-        
     }
 }
 
@@ -107,7 +104,7 @@ extension SigninView {
                 .padding(.top, 48)
             
             ZStack {
-                NavigationLink(destination: Text("Tela de cadastro"),
+                NavigationLink(destination: viewModel.signUpView(),
                                tag: 1,
                                selection: $action,
                                label: {EmptyView()})

@@ -18,12 +18,16 @@ class SigninViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.uiState = .goToHomeScreen
         }
-    
+        
     }
 }
 
 extension SigninViewModel {
     func homeView() -> some View {
         return SigninViewRouter.makeHomeView()
+    }
+    
+    func signUpView() -> some View {
+        return SignUpViewRouter.makeSignUpView()
     }
 }
