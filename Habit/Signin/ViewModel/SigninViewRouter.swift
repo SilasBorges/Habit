@@ -12,11 +12,10 @@ enum SigninViewRouter {
         let viewModel = HomeViewModel()
         return HomeView(viewModel: viewModel)
     }
-}
-
-enum SignUpViewRouter {
+    
     static func makeSignUpView() -> some View {
         let viewModel = SignUpViewModel()
         return SignUpView(viewModel: viewModel)
     }
 }
+

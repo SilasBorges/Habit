@@ -51,6 +51,15 @@ struct SignUpView: View {
                     Spacer()
                 }.padding(.horizontal, 8)
             }.padding()
+            
+            if case SignUpUIState.error(let value) = viewModel.uiState {
+                Text("")
+                    .alert(isPresented: .constant(true)) {
+                        Alert(title: Text("Habit"), message: Text(value), dismissButton: .default(Text("Ok")) {
+                            
+                        })
+                    }
+            }
         }
     }
 }
@@ -113,7 +122,7 @@ extension SignUpView {
 extension SignUpView {
     var saveButton: some View {
         Button("Realize o seu Cadastro") {
-        
+            viewModel.signUp()
         }
     }
 }
